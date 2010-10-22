@@ -12,13 +12,13 @@
 			
 		public static function about(){
 			return array(
-					 'name' => 'Force Download',
-					 'author' => array(
-							'name' => 'Giel Berkers',
-							'website' => 'http://www.gielberkers.com',
-							'email' => 'info@gielberkers.com'),
-					 'version' => '1.0',
-					 'release-date' => '2010-08-12T11:48:04+00:00');	
+				'name' => 'Force Download',
+				'author' => array(
+					'name' => 'Giel Berkers',
+					'website' => 'http://www.gielberkers.com',
+					'email' => 'info@gielberkers.com'),
+				'version' => '1.1',
+				'release-date' => '2010-08-12T11:48:04+00:00');	
 		}
 
 		public static function getSource(){
@@ -57,10 +57,23 @@
 			<p>
 				<em>Please note that each dir should be mentioned individualy, so a wildcard like <code>workspace/uploads/<strong>*</strong></code> will not work.</em>
 			</p>
+			<h3>Download the current page</h3>
+			<p>
+				You can also download the page itself, by adding the parameter <code>download</code> to the URL. The value of this parameter will be the name of the file. For example:
+			</p>
+			<pre class="XML"><code>'.htmlentities('<a href="/sheet/?download=sheet.xml">Download sheet in XML-format</a>').'</code></pre>
         ';
 		}
 		
-		public function load(){
+		public function load()
+		{
+			// In case of the page:
+			if(isset($_GET['download']))
+			{
+				header('Content-Disposition: attachment; filename='.$_GET['download']);
+			}
+			
+			// In case of a file:
 			if(isset($_GET['file'])) {
 				include_once('event.force_download.config.php');
 				$pathInfo = pathinfo($_GET['file']);

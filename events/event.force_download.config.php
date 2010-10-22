@@ -1,7 +1,7 @@
 <?php
 	// The directories that are allowed to download from:
 	$allowedDirs = array(
-		'workspace/uploads/Vacatures'
+		'workspace/uploads/documents'
 	);
 	
 	// The available mime types:
