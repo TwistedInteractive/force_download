@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension id="force_download" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+	<name>Force Download</name>
+	<description>When this event is attached to a page, it enables the page to force a download.</description>
+	<repo type="github">https://github.com/kanduvisla/force_download</repo>
+	<types>
+		<type>Event</type>
+	</types>
+	<authors>
+		<author>
+			<name github="kanduvisla" twitter="kanduvisla" symphony="kanduvisla">Giel Berkers</name>
+			<email>info@gielberkers.com</email>
+			<website>http://www.gielberkers.com</website>
+		</author>
+	</authors>
+	<releases>
+		<release version="1.1" date="2010-10-22" min="2.0.x" max="2.2.5" />
+		<release version="1.2" date="2012-05-09" min="2.3" />
+	</releases>
+</extension>

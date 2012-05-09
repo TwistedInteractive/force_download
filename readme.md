@@ -8,18 +8,7 @@ When this event is attached to a page, it enables the page to force a download. 
 
 To prevent that anyone can download any file from your website you have to set which folders are allowed for visitors to download files of. Otherwise evil people can download your config-settings for example simply by changing the URL in the browser bar to: `/download/?file=manifest/config.php`.
 
-To do this, you need to edit the file `event.force_download.config.php`:
-
-	$allowedDirs = array(
-	  'workspace/uploads',
-	  'workspace/uploads/manuals',
-	  'workspace/uploads/images',
-	  
-	  ...etc...
-	  
-	);
-
-Please note that each dir should be mentioned individualy, so a wildcard like `workspace/uploads/*` will not work.
+To do this, you need to add a list of trusted locations to the _'Force Download'_-section on the preferences page.
 
 ## Download the current page ##
 

@@ -17,8 +17,8 @@
 					'name' => 'Giel Berkers',
 					'website' => 'http://www.gielberkers.com',
 					'email' => 'info@gielberkers.com'),
-				'version' => '1.1',
-				'release-date' => '2010-08-12T11:48:04+00:00');	
+				'version' => '1.2',
+				'release-date' => '2012-05-09');
 		}
 
 		public static function getSource(){
@@ -44,18 +44,7 @@
 				for example simply by changing the URL in the browser bar to: <code>/download/?file=manifest/config.php</code>.
 			</p>
 			<p>
-				To do this, you need to edit the file <code>event.force_download.config.php</code>:
-			</p>
-			<pre class="PHP"><code>'.htmlentities('$allowedDirs = array(
-	\'workspace/uploads\',
-	\'workspace/uploads/manuals\',
-	\'workspace/uploads/images\',
-	
-	...etc...
-	
-);').'</code></pre>
-			<p>
-				<em>Please note that each dir should be mentioned individualy, so a wildcard like <code>workspace/uploads/<strong>*</strong></code> will not work.</em>
+				To do this, you need to add a list of trusted locations to the \'Force Download\'-section on the preferences page.
 			</p>
 			<h3>Download the current page</h3>
 			<p>
@@ -75,20 +64,43 @@
 			
 			// In case of a file:
 			if(isset($_GET['file'])) {
-				include_once('event.force_download.config.php');
+				// include_once('event.force_download.config.php');
+
+				$driver = ExtensionManager::getInstance('force_download');
+				/* @var $driver extension_force_download */
+				$allowedDirs = $driver->getLocations();
+
 				$pathInfo = pathinfo($_GET['file']);
+
 				// Check to see if the directory is allowed to direct-download from:
-				if(in_array($pathInfo['dirname'], $allowedDirs))
+				$wildCardMatch = false;
+				$info = pathinfo($_GET['file']);
+				foreach($allowedDirs as $allowedDir)
 				{
-					// Determine the mimetype:
-					if(array_key_exists(strtolower($pathInfo['extension']), $mime_types))
+					if(strstr($allowedDir, '/*') !== false)
 					{
-						$mimeType = $mime_types[strtolower($pathInfo['extension'])];
-					} else {
-						$mimeType = "application/force-download";
+						$match = str_replace('/*', '', $allowedDir);
+						if(strstr($match, $info['dirname']) !== false)
+						{
+							$wildCardMatch = true;
+						}
 					}
+				}
+
+				if(in_array($pathInfo['dirname'], $allowedDirs) || $wildCardMatch)
+				{
 					// Force the download:
 					if (file_exists($_GET['file'])) {
+						// Determine the mimetype:
+						if(function_exists('mime_content_type'))
+						{
+							$mimeType = mime_content_type($_GET['file']);
+						} elseif(function_exists('finfo_open')) {
+							$finfo = finfo_open(FILEINFO_MIME_TYPE);
+							$mimeType = finfo_file($finfo, $_GET['file']);
+						} else {
+							$mimeType = "application/force-download";
+						}
 						header('Content-Description: File Transfer');
 						header('Content-Type: '.$mimeType);
 						header('Content-Disposition: attachment; filename='.$pathInfo['basename']);
