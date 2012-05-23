@@ -80,7 +80,7 @@
 					if(strstr($allowedDir, '/*') !== false)
 					{
 						$match = str_replace('/*', '', $allowedDir);
-						if(strstr($match, $info['dirname']) !== false)
+						if(strstr($info['dirname'], $match) !== false)
 						{
 							$wildCardMatch = true;
 						}
