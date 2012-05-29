@@ -4,7 +4,7 @@
 	<description>When this event is attached to a page, it enables the page to force a download.</description>
 	<repo type="github">https://github.com/kanduvisla/force_download</repo>
 	<types>
-		<type>Event</type>
+		<type>Events</type>
 	</types>
 	<authors>
 		<author>
