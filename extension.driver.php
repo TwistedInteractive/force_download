@@ -50,7 +50,14 @@ Class extension_force_download extends Extension
 	 */
 	public function getLocations()
 	{
-		return array_filter(unserialize(Symphony::Configuration()->get('trusted_locations', 'force_download')));
+		$locations = unserialize(Symphony::Configuration()->get('trusted_locations', 'force_download'));
+		if(is_array($locations))
+		{
+			return array_filter($locations);
+		} else {
+			return array();
+		}
+		
 	}
 
 	/**
