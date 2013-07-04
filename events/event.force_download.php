@@ -14,9 +14,8 @@
 			return array(
 				'name' => 'Force Download',
 				'author' => array(
-					'name' => 'Giel Berkers',
-					'website' => 'http://www.gielberkers.com',
-					'email' => 'info@gielberkers.com'),
+					'name' => 'Twisted Interactive',
+					'website' => 'http://www.twisted.nl'),
 				'version' => '1.2',
 				'release-date' => '2012-05-09');
 		}
